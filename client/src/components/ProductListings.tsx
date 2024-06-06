@@ -2,9 +2,17 @@ import React, { useState } from 'react';
 import { Product } from '../types/types';
 import { EditProductForm } from './_ComponentList';
 
-const ProductListing = (product: Product) => {
-  console.log(product);
-  const { title, price, quantity } = product;
+const ProductListing = ({
+  _id,
+  title,
+  price,
+  quantity,
+}: {
+  _id: string;
+  title: string;
+  price: number;
+  quantity: number;
+}) => {
   const [editFormDisplay, setEditFormDisplay] = useState(false);
 
   return (
@@ -44,12 +52,13 @@ interface ProductListingProps {
 }
 
 export const ProductListings = ({ products }: ProductListingProps) => {
-  return products.map(({ title, price, quantity }) => (
+  return products.map(({ _id, title, price, quantity }) => (
     <ProductListing
+      _id={_id}
       title={title}
       price={price}
       quantity={quantity}
-      key={crypto.randomUUID()}
+      key={_id}
     />
   ));
 };

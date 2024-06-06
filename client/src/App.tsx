@@ -9,7 +9,7 @@ import {
 } from './components/_ComponentList';
 
 const productSchema = z.object({
-  _id: z.string().optional(),
+  _id: z.string(),
   title: z.string(),
   price: z.number(),
   quantity: z.number(),
@@ -55,7 +55,6 @@ function App() {
 
       <main>
         <ProductListings products={products} />
-
         <p>
           <button
             className='add-product-button'
@@ -64,7 +63,6 @@ function App() {
             Add A Product
           </button>
         </p>
-
         {addFormDisplay ? (
           <AddProductForm
             setAddFormDisplay={setAddFormDisplay}
