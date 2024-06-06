@@ -1,0 +1,27 @@
+{
+  "name": "shopping_cart_boilerplate",
+  "version": "1.0.0",
+  "description": "## Setup",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "practice": "parcel client/src/practice-index.html"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "eslint": "^9.4.0",
+    "eslint-config-prettier": "^9.1.0",
+    "parcel": "^2.12.0",
+    "prettier": "^3.3.0",
+    "process": "^0.11.10"
+  }
+}
