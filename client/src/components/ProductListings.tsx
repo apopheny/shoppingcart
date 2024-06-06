@@ -2,17 +2,10 @@ import React, { useState } from 'react';
 import { Product } from '../types/types';
 import { EditProductForm } from './_ComponentList';
 
-const ProductListing = ({
-  title,
-  price,
-  quantity,
-}: {
-  title: string;
-  price: number;
-  quantity: number;
-}) => {
+const ProductListing = (product: Product) => {
+  console.log(product);
+  const { title, price, quantity } = product;
   const [editFormDisplay, setEditFormDisplay] = useState(false);
-  const displayEditForm = (event: React.SyntheticEvent): void => {};
 
   return (
     <div className='product-listing'>
@@ -51,8 +44,6 @@ interface ProductListingProps {
 }
 
 export const ProductListings = ({ products }: ProductListingProps) => {
-  console.log(products[0]);
-
   return products.map(({ title, price, quantity }) => (
     <ProductListing
       title={title}

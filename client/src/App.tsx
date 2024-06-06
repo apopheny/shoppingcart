@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { Product } from './types/types';
-// import { mockProducts, mockCart } from './mockData/data';
 import axios from 'axios';
 import z from 'zod';
 import {
@@ -10,6 +9,7 @@ import {
 } from './components/_ComponentList';
 
 const productSchema = z.object({
+  _id: z.string().optional(),
   title: z.string(),
   price: z.number(),
   quantity: z.number(),
@@ -23,16 +23,16 @@ function App() {
   const [products, setProducts] = useState<Product[]>([]);
   const [cartProducts, setCartProducts] = useState<Product[]>([]);
 
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const { data } = await axios.get('/api/products');
-        setProducts(getProductsSchema.parse(data));
-      } catch (error) {
-        console.error(error);
-      }
-    };
+  const fetchProducts = async () => {
+    try {
+      const { data } = await axios.get('/api/products');
+      setProducts(getProductsSchema.parse(data));
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
+  useEffect(() => {
     fetchProducts();
   }, []);
 
@@ -66,7 +66,10 @@ function App() {
         </p>
 
         {addFormDisplay ? (
-          <AddProductForm setAddFormDisplay={setAddFormDisplay} />
+          <AddProductForm
+            setAddFormDisplay={setAddFormDisplay}
+            onProductAdded={fetchProducts}
+          />
         ) : null}
       </main>
     </div>
