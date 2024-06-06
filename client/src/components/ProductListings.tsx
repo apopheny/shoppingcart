@@ -3,12 +3,10 @@ import { Product } from '../types/types';
 import { EditProductForm } from './_ComponentList';
 
 const ProductListing = ({
-  _id,
   title,
   price,
   quantity,
 }: {
-  _id: string;
   title: string;
   price: number;
   quantity: number;
@@ -21,7 +19,7 @@ const ProductListing = ({
       <h2>Products</h2>
 
       <ul className='product-list'>
-        <li className='product' key={_id}>
+        <li className='product' key={crypto.randomUUID()}>
           <div className='product-details'>
             <h3>{title}</h3>
             <p className='price'>${price}</p>
@@ -35,7 +33,6 @@ const ProductListing = ({
               {editFormDisplay ? (
                 <EditProductForm
                   setEditFormDisplay={setEditFormDisplay}
-                  _id={_id}
                   title={title}
                   price={price}
                   quantity={quantity}
@@ -56,13 +53,12 @@ interface ProductListingProps {
 export const ProductListings = ({ products }: ProductListingProps) => {
   console.log(products[0]);
 
-  return products.map(({ _id, title, price, quantity }) => (
+  return products.map(({ title, price, quantity }) => (
     <ProductListing
-      _id={_id}
       title={title}
       price={price}
       quantity={quantity}
-      key={_id}
+      key={crypto.randomUUID()}
     />
   ));
 };

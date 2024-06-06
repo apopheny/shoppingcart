@@ -7,7 +7,6 @@ export const EditProductForm = ({
   quantity,
 }: {
   setEditFormDisplay: React.Dispatch<React.SetStateAction<boolean>>;
-  _id: string;
   title: string;
   price: number;
   quantity: number;
