@@ -1,5 +1,5 @@
 import React from 'react';
-import { Product } from '../types/types.ts';
+import { Product } from '../types/types';
 
 interface CartHeaderProps {
   cartItems: Array<Product>;

@@ -1,20 +1,33 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { mockProducts, mockCart } from './mockData/data';
-import { CartHeader, ProductListing } from './components/Components.ts';
+import {
+  CartHeader,
+  ProductListings,
+  AddProductForm,
+} from './components/_ComponentList';
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [addFormDisplay, setAddFormDisplay] = useState(false);
 
   return (
     <div id='app'>
       <CartHeader cartItems={mockProducts.slice(0, 2)} />
 
       <main>
-        <ProductListing products={mockProducts} />
+        <ProductListings products={mockProducts} />
 
         <p>
-          <button className='add-product-button'>Add A Product</button>
+          <button
+            className='add-product-button'
+            onClick={() => setAddFormDisplay(true)}
+          >
+            Add A Product
+          </button>
         </p>
+
+        {addFormDisplay ? (
+          <AddProductForm setAddFormDisplay={setAddFormDisplay} />
+        ) : null}
       </main>
     </div>
   );
