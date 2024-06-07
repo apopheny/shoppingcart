@@ -32,22 +32,19 @@ function App() {
     }
   };
 
+  const fetchCartProducts = async () => {
+    try {
+      const { data } = await axios.get('/api/cart');
+      setCartProducts(getCartSchema.parse(data));
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
     fetchProducts();
+    fetchCartProducts();
   }, []);
-
-  useEffect(() => {
-    const fetchCartProducts = async () => {
-      try {
-        const { data } = await axios.get('/api/cart');
-        setCartProducts(getCartSchema.parse(data));
-      } catch (error) {
-        console.error(error);
-      }
-
-      fetchCartProducts();
-    };
-  }, [cartProducts]);
 
   return (
     <div id='app'>

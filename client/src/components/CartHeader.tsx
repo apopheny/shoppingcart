@@ -22,9 +22,9 @@ export const CartHeader = ({ cartItems }: CartHeaderProps) => {
             </tr>
           </thead>
           <tbody>
-            {cartItems.map(({ title, quantity, price }) => {
+            {cartItems.map(({ _id, title, quantity, price }) => {
               return (
-                <tr key={crypto.randomUUID()}>
+                <tr key={_id}>
                   <td>{title}</td>
                   <td>{quantity}</td>
                   <td>${price}</td>

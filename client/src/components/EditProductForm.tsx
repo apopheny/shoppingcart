@@ -1,12 +1,14 @@
 import React from 'react';
 
 export const EditProductForm = ({
+  _id,
   setEditFormDisplay,
   title,
   price,
   quantity,
 }: {
   setEditFormDisplay: React.Dispatch<React.SetStateAction<boolean>>;
+  _id: string;
   title: string;
   price: number;
   quantity: number;
@@ -20,7 +22,7 @@ export const EditProductForm = ({
           <input
             type='text'
             id='product-name'
-            value={title}
+            defaultValue={title}
             aria-label='Product Name'
           />
         </div>
@@ -30,7 +32,7 @@ export const EditProductForm = ({
           <input
             type='number'
             id='product-price'
-            value={price}
+            defaultValue={price}
             aria-label='Product Price'
           />
         </div>
@@ -40,7 +42,7 @@ export const EditProductForm = ({
           <input
             type='number'
             id='product-quantity'
-            value={quantity}
+            defaultValue={quantity}
             aria-label='Product Quantity'
           />
         </div>

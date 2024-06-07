@@ -16,11 +16,9 @@ const ProductListing = ({
   const [editFormDisplay, setEditFormDisplay] = useState(false);
 
   return (
-    <div className='product-listing'>
-      <h2>Products</h2>
-
+    <>
       <ul className='product-list'>
-        <li className='product' key={crypto.randomUUID()}>
+        <li className='product' key={_id}>
           <div className='product-details'>
             <h3>{title}</h3>
             <p className='price'>${price}</p>
@@ -33,6 +31,7 @@ const ProductListing = ({
               </button>
               {editFormDisplay ? (
                 <EditProductForm
+                  _id={_id}
                   setEditFormDisplay={setEditFormDisplay}
                   title={title}
                   price={price}
@@ -43,7 +42,7 @@ const ProductListing = ({
           </div>
         </li>
       </ul>
-    </div>
+    </>
   );
 };
 
@@ -52,13 +51,18 @@ interface ProductListingProps {
 }
 
 export const ProductListings = ({ products }: ProductListingProps) => {
-  return products.map(({ _id, title, price, quantity }) => (
-    <ProductListing
-      _id={_id}
-      title={title}
-      price={price}
-      quantity={quantity}
-      key={_id}
-    />
-  ));
+  return (
+    <div className='product-listing'>
+      <h2>Products</h2>
+      {products.map(({ _id, title, price, quantity }) => (
+        <ProductListing
+          _id={_id}
+          title={title}
+          price={price}
+          quantity={quantity}
+          key={_id}
+        />
+      ))}
+    </div>
+  );
 };
