@@ -19,14 +19,14 @@ const getProductsSchema = z.array(productSchema);
 const getCartSchema = z.array(productSchema);
 
 function App() {
+  const [productsChanges, setProductsChanges] = useState(0);
+  const [cartChanges, setcartChanges] = useState(0);
   const [addFormDisplay, setAddFormDisplay] = useState(false);
-  const [products, setProducts] = useState<Product[]>([]);
   const [cartProducts, setCartProducts] = useState<Product[]>([]);
 
   const fetchProducts = async () => {
     try {
       const { data } = await axios.get('/api/products');
-      setProducts(getProductsSchema.parse(data));
     } catch (error) {
       console.error(error);
     }
@@ -40,18 +40,20 @@ function App() {
       console.error(error);
     }
   };
-
   useEffect(() => {
     fetchProducts();
+  }, [productsChanges]);
+
+  useEffect(() => {
     fetchCartProducts();
-  }, []);
+  }, [cartChanges]);
 
   return (
     <div id='app'>
       <CartHeader cartItems={cartProducts} />
 
       <main>
-        <ProductListings products={products} />
+        <ProductListings />
         <p>
           <button
             className='add-product-button'
@@ -62,8 +64,8 @@ function App() {
         </p>
         {addFormDisplay ? (
           <AddProductForm
-            setAddFormDisplay={setAddFormDisplay}
-            onProductAdded={fetchProducts}
+            formDisplaySetter={setAddFormDisplay}
+            productsUpdatedSetter={setProductsChanges}
           />
         ) : null}
       </main>

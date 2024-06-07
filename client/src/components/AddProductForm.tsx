@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { validateProduct } from './helpers';
 
 export const AddProductForm = ({
-  setAddFormDisplay,
-  onProductAdded,
+  formDisplaySetter,
+  productsUpdatedSetter,
 }: {
-  setAddFormDisplay: React.Dispatch<React.SetStateAction<boolean>>;
-  onProductAdded: () => Promise<void>;
+  formDisplaySetter: React.Dispatch<React.SetStateAction<boolean>>;
+  productsUpdatedSetter: React.Dispatch<React.SetStateAction<number>>;
 }) => {
   const [productName, setProductName] = useState('');
   const [productPrice, setProductPrice] = useState(0);
@@ -19,9 +20,7 @@ export const AddProductForm = ({
         price: productPrice,
         quantity: productQuantity,
       });
-
-      setAddFormDisplay(false);
-      onProductAdded();
+      productsUpdatedSetter((prev) => prev + 1);
     } catch (error) {
       console.error(error);
     }
@@ -33,7 +32,16 @@ export const AddProductForm = ({
         action=''
         onSubmit={(event) => {
           event.preventDefault();
-          postProduct();
+          if (
+            validateProduct({
+              title: productName,
+              price: productPrice,
+              quantity: productQuantity,
+            })
+          ) {
+            postProduct();
+            formDisplaySetter(false);
+          }
         }}
       >
         <div className='input-group'>
@@ -71,7 +79,7 @@ export const AddProductForm = ({
         </div>
         <div className='actions form-actions'>
           <button type='submit'>Add</button>
-          <button type='button' onClick={() => setAddFormDisplay(false)}>
+          <button type='button' onClick={() => formDisplaySetter(false)}>
             Cancel
           </button>
         </div>
