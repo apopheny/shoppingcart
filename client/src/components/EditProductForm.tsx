@@ -21,12 +21,6 @@ export const EditProductForm = ({
   const [productPrice, setProductPrice] = useState(price);
   const [productQuantity, setProductQuantity] = useState(quantity);
 
-  useEffect(() => {
-    setProductName(productName);
-    setProductPrice(productPrice);
-    setProductQuantity(productQuantity);
-  }, [title, price, quantity]);
-
   const putProduct = async () => {
     try {
       await axios.put(`/api/products/${_id}`, {
