@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 // import z from 'zod';
-import { validateProduct } from './helpers';
+import { validateProduct } from "./helpers";
 
 export const EditProductForm = ({
   _id,
@@ -9,14 +9,14 @@ export const EditProductForm = ({
   title,
   price,
   quantity,
-  updateSetter,
+  setProductsChanges,
 }: {
   setEditFormDisplay: React.Dispatch<React.SetStateAction<boolean>>;
   _id: string;
   title: string;
   price: number;
   quantity: number;
-  updateSetter: React.Dispatch<React.SetStateAction<number>>;
+  setProductsChanges: React.Dispatch<React.SetStateAction<number>>;
 }) => {
   const [productName, setProductName] = useState(title);
   const [productPrice, setProductPrice] = useState(price);
@@ -35,7 +35,7 @@ export const EditProductForm = ({
         price: productPrice,
         quantity: productQuantity,
       });
-      updateSetter((prev) => prev + 1);
+      setProductsChanges((prev) => prev + 1);
       setEditFormDisplay(false);
     } catch (error) {
       console.error(error);
@@ -43,7 +43,7 @@ export const EditProductForm = ({
   };
 
   return (
-    <div className='edit-form'>
+    <div className="edit-form">
       <h3>Edit Product</h3>
       <form
         onSubmit={(event) => {
@@ -59,13 +59,13 @@ export const EditProductForm = ({
           }
         }}
       >
-        <div className='input-group'>
-          <label htmlFor='product-name'>Product Name</label>
+        <div className="input-group">
+          <label htmlFor="product-name">Product Name</label>
           <input
-            type='text'
-            id='product-name'
+            type="text"
+            id="product-name"
             defaultValue={title}
-            aria-label='Product Name'
+            aria-label="Product Name"
             required
             onChange={({ target }) => {
               setProductName(target.value);
@@ -73,13 +73,13 @@ export const EditProductForm = ({
           />
         </div>
 
-        <div className='input-group'>
-          <label htmlFor='product-price'>Price</label>
+        <div className="input-group">
+          <label htmlFor="product-price">Price</label>
           <input
-            type='number'
-            id='product-price'
+            type="number"
+            id="product-price"
             defaultValue={price}
-            aria-label='Product Price'
+            aria-label="Product Price"
             required
             onChange={({ target }) => {
               setProductPrice(Number(target.value));
@@ -87,13 +87,13 @@ export const EditProductForm = ({
           />
         </div>
 
-        <div className='input-group'>
-          <label htmlFor='product-quantity'>Quantity</label>
+        <div className="input-group">
+          <label htmlFor="product-quantity">Quantity</label>
           <input
-            type='number'
-            id='product-quantity'
+            type="number"
+            id="product-quantity"
             defaultValue={quantity}
-            aria-label='Product Quantity'
+            aria-label="Product Quantity"
             required
             onChange={({ target }) => {
               setProductQuantity(Number(target.value));
@@ -101,9 +101,9 @@ export const EditProductForm = ({
           />
         </div>
 
-        <div className='actions form-actions'>
-          <button type='submit'>Update</button>
-          <button type='button' onClick={() => setEditFormDisplay(false)}>
+        <div className="actions form-actions">
+          <button type="submit">Update</button>
+          <button type="button" onClick={() => setEditFormDisplay(false)}>
             Cancel
           </button>
         </div>

@@ -1,6 +1,6 @@
-import { CartHeader } from './CartHeader';
-import { ProductListings } from './ProductListings';
-import { AddProductForm } from './AddProductForm';
-import { EditProductForm } from './EditProductForm';
+import { CartHeader } from "./CartHeader";
+import { ProductListing } from "./ProductListing";
+import { AddProductForm } from "./AddProductForm";
+import { EditProductForm } from "./EditProductForm";
 
-export { CartHeader, ProductListings, AddProductForm, EditProductForm };
+export { CartHeader, ProductListing, AddProductForm, EditProductForm };
