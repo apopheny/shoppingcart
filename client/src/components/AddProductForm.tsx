@@ -1,14 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
-import { validateProduct } from "./helpers";
+import { validProductFormSchema } from "./helpers";
+
+interface AddProductFormProps {
+  setAddFormDisplay: React.Dispatch<React.SetStateAction<boolean>>;
+  setProductsChanges: React.Dispatch<React.SetStateAction<number>>;
+}
 
 export const AddProductForm = ({
   setProductsChanges,
   setAddFormDisplay,
-}: {
-  setAddFormDisplay: React.Dispatch<React.SetStateAction<boolean>>;
-  setProductsChanges: React.Dispatch<React.SetStateAction<number>>;
-}) => {
+}: AddProductFormProps) => {
   const [productName, setProductName] = useState("");
   const [productPrice, setProductPrice] = useState(0);
   const [productQuantity, setProductQuantity] = useState(0);
@@ -34,10 +36,10 @@ export const AddProductForm = ({
         onSubmit={(event) => {
           event.preventDefault();
           if (
-            validateProduct({
-              title: productName,
-              price: productPrice,
-              quantity: productQuantity,
+            validProductFormSchema.parse({
+              productName,
+              productPrice,
+              productQuantity,
             })
           ) {
             postProduct();

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-// import z from 'zod';
-import { validateProduct } from "./helpers";
+import { validProductFormSchema } from "./helpers";
 
 export const EditProductForm = ({
   _id,
@@ -49,10 +48,10 @@ export const EditProductForm = ({
         onSubmit={(event) => {
           event.preventDefault();
           if (
-            validateProduct({
-              title: productName,
-              price: productPrice,
-              quantity: productQuantity,
+            validProductFormSchema.parse({
+              productName,
+              productPrice,
+              productQuantity,
             })
           ) {
             putProduct();
