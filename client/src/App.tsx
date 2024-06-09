@@ -1,29 +1,22 @@
 import React, { useEffect, useState } from "react";
-import { Product } from "./types/types";
+import { Product, productSchema } from "./types/types";
 import axios from "axios";
 import z from "zod";
 import {
-  CartHeader,
+  Cart,
   ProductListing,
   AddProductForm,
 } from "./components/_ComponentList";
 
-const productSchema = z.object({
-  _id: z.string(),
-  title: z.string(),
-  price: z.number(),
-  quantity: z.number(),
-});
-
 const getProductsSchema = z.array(productSchema);
-const getCartSchema = z.array(productSchema);
 
-function App() {
+const App = () => {
   const [products, setProducts] = useState<Product[]>([]);
-  const [cartProducts, setCartProducts] = useState<Product[]>([]);
-
   const [productsChanges, setProductsChanges] = useState(0);
-  const [cartChanges, setcartChanges] = useState(0);
+
+  const [cartProducts, setCartProducts] = useState<Product[]>([]);
+  const [cartChanges, setCartChanges] = useState(0);
+
   const [addFormDisplay, setAddFormDisplay] = useState(false);
 
   const fetchProducts = async () => {
@@ -39,22 +32,22 @@ function App() {
     fetchProducts();
   }, [productsChanges]);
 
-  const fetchCartProducts = async () => {
+  const fetchCartItems = async () => {
     try {
       const { data } = await axios.get("/api/cart");
-      setCartProducts(getCartSchema.parse(data));
+      setCartProducts(getProductsSchema.parse(data));
     } catch (error) {
       console.error(error);
     }
   };
 
   useEffect(() => {
-    fetchCartProducts();
+    fetchCartItems();
   }, [cartChanges]);
 
   return (
     <div id="app">
-      <CartHeader cartItems={cartProducts} />
+      <Cart cartProducts={cartProducts} setCartChanges={setCartChanges} />
 
       <main>
         <div className="product-listing">
@@ -67,6 +60,7 @@ function App() {
               quantity={quantity}
               key={_id}
               setProductsChanges={setProductsChanges}
+              setCartChanges={setCartChanges}
             />
           ))}
         </div>
@@ -87,6 +81,6 @@ function App() {
       </main>
     </div>
   );
-}
+};
 
 export default App;
