@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { Product, productSchema } from "./types/types";
-import axios from "axios";
-import z from "zod";
+import React, { useEffect, useState } from 'react';
+import { Product, productSchema } from '../types/types';
+import axios from 'axios';
+import z from 'zod';
 import {
   Cart,
   ProductListing,
   AddProductForm,
-} from "./components/_ComponentList";
+} from '../components/_ComponentList';
 
 const getProductsSchema = z.array(productSchema);
 
@@ -21,20 +21,19 @@ const App = () => {
 
   const fetchProducts = async () => {
     try {
-      const { data } = await axios.get("/api/products");
+      const { data } = await axios.get('/api/products');
       setProducts(getProductsSchema.parse(data));
     } catch (error) {
       console.error(error);
     }
   };
-
   useEffect(() => {
     fetchProducts();
   }, [productsChanges]);
 
   const fetchCartItems = async () => {
     try {
-      const { data } = await axios.get("/api/cart");
+      const { data } = await axios.get('/api/cart');
       setCartProducts(getProductsSchema.parse(data));
     } catch (error) {
       console.error(error);
@@ -46,11 +45,11 @@ const App = () => {
   }, [cartChanges]);
 
   return (
-    <div id="app">
+    <div id='app'>
       <Cart cartProducts={cartProducts} setCartChanges={setCartChanges} />
 
       <main>
-        <div className="product-listing">
+        <div className='product-listing'>
           <h2>Products</h2>
           {products.map(({ _id, title, price, quantity }) => (
             <ProductListing
@@ -66,7 +65,7 @@ const App = () => {
         </div>
         <p>
           <button
-            className="add-product-button"
+            className='add-product-button'
             onClick={() => setAddFormDisplay(true)}
           >
             Add A Product
