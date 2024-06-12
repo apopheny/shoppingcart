@@ -1,6 +1,7 @@
-import React, { useState } from "react";
-import axios from "axios";
-import { EditProductForm } from "./_ComponentList";
+import React, { useEffect, useState } from 'react';
+import { EditProductForm } from './_ComponentList';
+import { deleteProductRequest } from '../services/deleteProductRequest';
+import { addProductToCart } from '../services/addProductToCart';
 
 interface ProductListingProps {
   _id: string;
@@ -21,43 +22,43 @@ export const ProductListing = ({
 }: ProductListingProps) => {
   const [editFormDisplay, setEditFormDisplay] = useState(false);
 
-  const deleteProduct = async () => {
-    try {
-      await axios.delete(`/api/products/${_id}`);
+  const deleteProduct = (_id: string) => {
+    const request = async () => {
+      await deleteProductRequest(_id);
       setProductsChanges((prev) => prev + 1);
-    } catch (error) {
-      console.error(error);
-    }
+    };
+
+    request();
   };
 
-  const addProductToCart = async (productId: string) => {
-    try {
-      await axios.post("/api/add-to-cart", { productId });
+  const addToCart = (productId: string) => {
+    const request = async () => {
+      await addProductToCart(productId);
       setProductsChanges((prev) => prev + 1);
       setCartChanges((prev) => prev + 1);
-    } catch (error) {
-      console.error(error);
-    }
+    };
+
+    request();
   };
 
   return (
     <>
-      <ul className="product-list">
-        <li className="product" key={_id}>
-          <div className="product-details">
+      <ul className='product-list'>
+        <li className='product' key={_id}>
+          <div className='product-details'>
             <h3>{title}</h3>
-            <p className="price">${price}</p>
-            <p className="quantity">{quantity} left in stock</p>
+            <p className='price'>${price}</p>
+            <p className='quantity'>{quantity} left in stock</p>
 
-            <div className="actions product-actions">
+            <div className='actions product-actions'>
               <button
-                className="add-to-cart"
+                className='add-to-cart'
                 disabled={quantity > 0 ? false : true}
-                onClick={() => addProductToCart(_id)}
+                onClick={() => addToCart(_id)}
               >
                 Add to Cart
               </button>
-              <button className="edit" onClick={() => setEditFormDisplay(true)}>
+              <button className='edit' onClick={() => setEditFormDisplay(true)}>
                 Edit
               </button>
               {editFormDisplay ? (
@@ -70,7 +71,10 @@ export const ProductListing = ({
                   setProductsChanges={setProductsChanges}
                 />
               ) : null}
-              <button className="delete-button" onClick={deleteProduct}>
+              <button
+                className='delete-button'
+                onClick={() => deleteProduct(_id)}
+              >
                 <span>X</span>
               </button>
             </div>

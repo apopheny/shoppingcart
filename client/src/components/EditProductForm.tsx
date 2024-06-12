@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { validProductFormSchema } from "./helpers";
+import React, { useState } from 'react';
+import { validProductFormSchema } from './helpers';
+import { editProduct } from '../services/editProduct';
 
 export const EditProductForm = ({
   _id,
@@ -21,22 +21,18 @@ export const EditProductForm = ({
   const [productPrice, setProductPrice] = useState(price);
   const [productQuantity, setProductQuantity] = useState(quantity);
 
-  const putProduct = async () => {
-    try {
-      await axios.put(`/api/products/${_id}`, {
-        title: productName,
-        price: productPrice,
-        quantity: productQuantity,
-      });
+  const putProduct = () => {
+    const request = async () => {
+      await editProduct(_id, productName, productPrice, productQuantity);
       setProductsChanges((prev) => prev + 1);
       setEditFormDisplay(false);
-    } catch (error) {
-      console.error(error);
-    }
+    };
+
+    request();
   };
 
   return (
-    <div className="edit-form">
+    <div className='edit-form'>
       <h3>Edit Product</h3>
       <form
         onSubmit={(event) => {
@@ -52,13 +48,13 @@ export const EditProductForm = ({
           }
         }}
       >
-        <div className="input-group">
-          <label htmlFor="product-name">Product Name</label>
+        <div className='input-group'>
+          <label htmlFor='product-name'>Product Name</label>
           <input
-            type="text"
-            id="product-name"
+            type='text'
+            id='product-name'
             defaultValue={title}
-            aria-label="Product Name"
+            aria-label='Product Name'
             required
             onChange={({ target }) => {
               setProductName(target.value);
@@ -66,13 +62,13 @@ export const EditProductForm = ({
           />
         </div>
 
-        <div className="input-group">
-          <label htmlFor="product-price">Price</label>
+        <div className='input-group'>
+          <label htmlFor='product-price'>Price</label>
           <input
-            type="number"
-            id="product-price"
+            type='number'
+            id='product-price'
             defaultValue={price}
-            aria-label="Product Price"
+            aria-label='Product Price'
             required
             onChange={({ target }) => {
               setProductPrice(Number(target.value));
@@ -80,13 +76,13 @@ export const EditProductForm = ({
           />
         </div>
 
-        <div className="input-group">
-          <label htmlFor="product-quantity">Quantity</label>
+        <div className='input-group'>
+          <label htmlFor='product-quantity'>Quantity</label>
           <input
-            type="number"
-            id="product-quantity"
+            type='number'
+            id='product-quantity'
             defaultValue={quantity}
-            aria-label="Product Quantity"
+            aria-label='Product Quantity'
             required
             onChange={({ target }) => {
               setProductQuantity(Number(target.value));
@@ -94,9 +90,9 @@ export const EditProductForm = ({
           />
         </div>
 
-        <div className="actions form-actions">
-          <button type="submit">Update</button>
-          <button type="button" onClick={() => setEditFormDisplay(false)}>
+        <div className='actions form-actions'>
+          <button type='submit'>Update</button>
+          <button type='button' onClick={() => setEditFormDisplay(false)}>
             Cancel
           </button>
         </div>

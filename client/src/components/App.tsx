@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { Product, productSchema } from '../types/types';
-import axios from 'axios';
 import z from 'zod';
 import {
   Cart,
   ProductListing,
   AddProductForm,
 } from '../components/_ComponentList';
+import { fetchProducts } from '../services/fetchProducts';
+import { fetchCartItems } from '../services/fetchCartItems';
 
 const getProductsSchema = z.array(productSchema);
 
@@ -19,29 +20,22 @@ const App = () => {
 
   const [addFormDisplay, setAddFormDisplay] = useState(false);
 
-  const fetchProducts = async () => {
-    try {
-      const { data } = await axios.get('/api/products');
-      setProducts(getProductsSchema.parse(data));
-    } catch (error) {
-      console.error(error);
-    }
-  };
   useEffect(() => {
-    fetchProducts();
+    const fetchData = async () => {
+      const data = await fetchProducts();
+      setProducts(getProductsSchema.parse(data));
+    };
+
+    fetchData();
   }, [productsChanges]);
 
-  const fetchCartItems = async () => {
-    try {
-      const { data } = await axios.get('/api/cart');
-      setCartProducts(getProductsSchema.parse(data));
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   useEffect(() => {
-    fetchCartItems();
+    const fetchData = async () => {
+      const data = await fetchCartItems();
+      setCartProducts(getProductsSchema.parse(data));
+    };
+
+    fetchData();
   }, [cartChanges]);
 
   return (

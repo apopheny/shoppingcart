@@ -1,6 +1,6 @@
-import React from "react";
-import axios from "axios";
-import { Product } from "../types/types";
+import React from 'react';
+import { Product } from '../types/types';
+import { checkoutCart } from '../services/checkoutCart';
 
 interface CartProps {
   cartProducts: Array<Product>;
@@ -8,28 +8,31 @@ interface CartProps {
 }
 
 export const Cart = ({ cartProducts, setCartChanges }: CartProps) => {
-  const checkout = async () => {
-    try {
-      await axios.post("/api/checkout");
+  const checkout = () => {
+    const request = async () => {
+      await checkoutCart();
       setCartChanges((prev) => prev + 1);
-    } catch (error) {
-      console.error(error);
-    }
+    };
+
+    request();
   };
 
-  const total = cartProducts.reduce((acc, product) => acc + product.price, 0);
+  const total = cartProducts.reduce(
+    (acc, product) => acc + product.price * product.quantity,
+    0
+  );
 
   return (
     <header>
       <h1>The Shop!</h1>
-      <div className="cart">
+      <div className='cart'>
         <h2>Your Cart</h2>
-        <table className="cart-items">
+        <table className='cart-items'>
           <thead>
             <tr>
-              <th scope="col">Item</th>
-              <th scope="col">Quantity</th>
-              <th scope="col">Price</th>
+              <th scope='col'>Item</th>
+              <th scope='col'>Quantity</th>
+              <th scope='col'>Price</th>
             </tr>
           </thead>
           <tbody>
@@ -45,14 +48,14 @@ export const Cart = ({ cartProducts, setCartChanges }: CartProps) => {
           </tbody>
           <tfoot>
             <tr>
-              <td colSpan={3} className="total">
+              <td colSpan={3} className='total'>
                 Total: ${total}
               </td>
             </tr>
           </tfoot>
         </table>
-        <div className="checkout-button">
-          <button className="checkout" onClick={checkout}>
+        <div className='checkout-button'>
+          <button className='checkout' onClick={checkout}>
             Checkout
           </button>
         </div>
